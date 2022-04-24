@@ -16,7 +16,7 @@ for i in range(n):
             now_x, now_y = i, j
             array[now_x][now_y] = 0
 
-dx = [1, 0, -1, 0]
+dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
 
@@ -31,7 +31,7 @@ def bfs():
             nx = x + dx[i]
             ny = y + dy[i]
             if nx >= 0 and nx < n and ny >= 0 and ny < n:
-                if dist == -1 and array[nx][ny] <= now_size:
+                if dist[nx][ny] == -1 and array[nx][ny] <= now_size:
                     dist[nx][ny] = dist[x][y] + 1
                     q.append((nx, ny))
     return dist
