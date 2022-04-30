@@ -1,11 +1,18 @@
 from collections import deque
 
 n, m = map(int, input().split())
+chicken2, house = [], []
 array = []
-for _ in range(n):
-    array.append(list(map(int, input().split())))
+for r in range(n):
+    data = list(map(int, input().split()))
+    for c in range(n):
+        if data[c] == 1:
+            house.append((r,c))
+        elif data[c] == 2:
+            chicken2.append((r,c))
+    array.append((data))
 
-dx = [1, 0, -1, 0]
+dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
 #집의 x, y를 입력 받아서 dist 찾기
@@ -28,6 +35,7 @@ def bfs(now_x, now_y):
                 dist += 1
                 visited[nx][ny] = 1
                 q.append((nx, ny))
+    print(dist)
     return dist
 
 def combinations(data, length):
@@ -63,13 +71,16 @@ comb_arr = list(range(1, m+1))
 comb_list = []
 for i in range(m, 0, -1):
     comb_list.append(combinations(comb_arr, i))
+
 dist = 0
 result = 1e9
-for lst in comb_list:
+comb_list2 = combinations(chicken2, m)
+"""
+#메인함수
+for lst in comb_list2:
+    now_dist = 0
     visited = [[0] * n for _ in range(n)]
     for i in lst:
-        print(lst)
-        print(chicken)
         x = chicken[i-1][0]
         y = chicken[i-1][1]
         array[x][y] = 2
@@ -78,14 +89,36 @@ for lst in comb_list:
         for j in range(n):
             if array[i][j] == 1 and not visited[i][j]:
                 visited[i][j]=1
-                dist += bfs(i, j)
+                now_dist += bfs(i, j)
 
     for i in lst:
         x = chicken[i-1][0]
         y = chicken[i-1][1]
         array[x][y] = 0
+    print(now_dist)
+    if now_dist < result:
+        result = now_dist
+"""
 
-    if dist < result:
-        result = dist
+for lst in comb_list2:
+    now_dist=0
+    visited= [[0]*n for _ in range(n)]
+    for i in range(m):
+        chx = lst[i][0]
+        chy = lst[i][1]
+        array[chx][chy] = 2
+    for hox, hoy in house:
+        if not visited[hox][hoy]:
+            visited[hox][hoy]=1
+            now_dist += bfs(hox, hoy)
+    print(dist)
+    print(array)
+    for i in range(m):
+        chx = lst[i][0]
+        chy = lst[i][1]
+        array[chx][chy] = 0
+    if now_dist < result:
+        result = now_dist
+
 
 print(result)
