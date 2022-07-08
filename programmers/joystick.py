@@ -1,3 +1,6 @@
+from tkinter import N
+
+
 def solution(name):
     answer = 0
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -8,6 +11,8 @@ def solution(name):
     result[0] = name[0]
     
     for i in range(1,length):
+        if result == name:
+            break
         if name[i] == "A":
             continue
         
