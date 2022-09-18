@@ -8,16 +8,16 @@ def combinations(data, length):
             r.append(cur)
         if pos == len(data):
             return
-        if type(data) is list:
-            for i in range(pos, len(data)):
-                dfs(cur + [data[i]], i + 1)
-        else:
-            for i in range(pos, len(data)):
-                dfs(cur + data[i], i + 1)
-    if type(data) is list:
-        dfs([], 0)
-    else:
-        dfs("", 0)
+        #if type(data) is list:
+        for i in range(pos, len(data)):
+            dfs(cur + [data[i]], i + 1)
+        #else:
+        #    for i in range(pos, len(data)):
+        #        dfs(cur + data[i], i + 1)
+    #if type(data) is list:
+    dfs([], 0)
+    #else:
+    #    dfs("", 0)
     return r
 
 for r in range(n):
