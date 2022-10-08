@@ -29,8 +29,10 @@ visited = [[0]*m for _ in range(n)]
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
-#def bfs():
-    
+
+def bfs():
+    q = deque()
+        
 
 for r in range(n):
     data = list(map(int, input().split()))
