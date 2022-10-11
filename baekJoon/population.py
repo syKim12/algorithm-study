@@ -1,6 +1,6 @@
 from collections import deque
 from math import floor
-
+"""
 def bfs():
     cnt = 0
     visited = [[0]*n for _ in range(n)]
@@ -40,12 +40,14 @@ def bfs():
         cnt = 1
     print("***")
     return cnt
-        
-def done():
-    visited = [[0]*n for _ in range(n)]
-    start_x, start_y = 0, 0
+"""
+
+def bfs(i, j):
+    cnt = 0
     q = deque()
-    q.append([start_x, start_y])
+    move_list = deque()
+    q.append((i, j))
+    move_list.append((i, j))
     while q:
         x, y = q.popleft()
         for i in range(4):
@@ -54,11 +56,10 @@ def done():
             if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
                 gap = abs(array[x][y] - array[nx][ny])
                 if left <= gap <= right:
-                    return False
-                visited[nx][ny] = 1
-                q.append([nx, ny])
-    return True
-    
+                    visited[nx][ny] = 1
+                    q.append((nx, ny))
+                    move_list.append((nx, ny))           
+    return move_list
 
 #set dx, dy
 dx = [-1, 0, 1, 0]
@@ -73,10 +74,24 @@ for _ in range(n):
     array.append(data)
 
 while True:
-    check = bfs()
-    if not check:
+    done = 0
+    visited = [[0]*n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if not visited[i][j]:
+                visited[i][j] = 1
+                move = bfs(i, j)
+                if len(move) > 1:    
+                    population = sum([array[x][y] for x, y in move]) // len(move)
+                    for x, y in move:
+                        array[x][y] = population
+                    done = 1
+    if not done:
         break
-    cnt += check
+    cnt += 1
+
 print(cnt)
+
+
 
 
