@@ -88,6 +88,7 @@ while True:
                     done = 1
     if not done:
         break
+    
     cnt += 1
 
 print(cnt)
