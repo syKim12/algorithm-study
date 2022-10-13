@@ -53,6 +53,7 @@ def bfs(i, j):
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
+            #print(nx, ny, q)
             if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
                 gap = abs(array[x][y] - array[nx][ny])
                 if left <= gap <= right:
@@ -74,25 +75,23 @@ for _ in range(n):
     array.append(data)
 
 while True:
+    #move = []
     done = 0
     visited = [[0]*n for _ in range(n)]
     for i in range(n):
         for j in range(n):
             if not visited[i][j]:
+                #population = 0 
                 visited[i][j] = 1
                 move = bfs(i, j)
-                if len(move) > 1:    
-                    population = sum([array[x][y] for x, y in move]) // len(move)
+                length = len(move)
+                if length > 1:    
+                    population = sum([array[x][y] for x, y in move]) // length
                     for x, y in move:
                         array[x][y] = population
                     done = 1
     if not done:
         break
-    
     cnt += 1
-
+#print(array)
 print(cnt)
-
-
-
-
