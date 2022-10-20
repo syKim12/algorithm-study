@@ -2,15 +2,18 @@ from collections import deque
 
 n = int(input())
 l = list(map(int, input().split()))
-cnt_1, cnt_2 = 0, 0
-until_num = n // 2
+cnt = 0
 
-for back in range(n - 1, until_num - 1, -1):
-    front = n - back - 1
-    if l[back] == l[front]:
-        continue
-    else:
-        cnt_1 += 1
+q = deque(l)
+while True:
+    if len(q) <= 1:
+        break
+    left = q.popleft()
+    right = q.pop()
+    if left != right:
+        q.appendleft(left)
+        q.append(right)
+        q.append(left)
+        cnt += 1
 
-left = deque()
-right = deque()
+print(cnt)
