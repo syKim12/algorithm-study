@@ -1,19 +1,15 @@
 from collections import deque
+#pyp3로 업로드
 
 n = int(input())
-l = list(map(int, input().split()))
-cnt = 0
+arr = list(map(int, input().split()))
+dp = [[0] * (n + 1) for _ in range(n + 1)]
 
-q = deque(l)
-while True:
-    if len(q) <= 1:
-        break
-    left = q.popleft()
-    right = q.pop()
-    if left != right:
-        q.appendleft(left)
-        q.append(right)
-        q.append(left)
-        cnt += 1
+for i in range(1, n + 1):
+    for j in range(1, n + 1):
+        if arr[-i] == arr[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1] + 1
+        else:
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
-print(cnt)
+print(n - dp[-1][-1])
