@@ -53,7 +53,6 @@ def bfs(i, j):
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
-            #print(nx, ny, q)
             if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
                 gap = abs(array[x][y] - array[nx][ny])
                 if left <= gap <= right:
