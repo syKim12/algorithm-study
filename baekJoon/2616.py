@@ -5,18 +5,29 @@ train_list = [0] + list(map(int, input().split()))
 train_limit = int(input())
 train = 3
 
-dp = [[0]*(train_num + 1) for _ in range(train_num + 1)]
+dp = [[0]*(train_num + 1) for _ in range(train)]
+#setting
+for i in range(train_limit, train_num + 1):
+    dp[0][i] = sum(train_list[i-train_limit+1:i+1])
 
-for i in range(1, train_num + 1):
+for a in range(1, train):
+    start = a * train_limit
+    for b in range(start, train_num + 1):
+        dp[a][b] = max(dp[a][b-1], dp[a-1][b-train_limit] + dp[0][b])   
+"""
+for i in range(1, train_num):
     train_flag = train_limit
-    for j in range(i, train_num + 1):
+    for j in range(i, train_num+1):
         if train_flag > 0:
             dp[i][j] = dp[i][j-1] + train_list[j]
             train_flag -= 1
         else:
             dp[i][j] = dp[i][j-1]    
-        
-value_list = [dp[i][-1] for i in range(1, train_num + 1)]
+"""            
+print(dp[-1][-1])  
+
+"""
+value_list = [dp[i][-1] for i in range(1, train_num)]
 comb_list = list(combinations(range(train_num), 3))
 max_value = 0
 for left, middle, right in comb_list:
@@ -25,6 +36,7 @@ for left, middle, right in comb_list:
     else:
         max_value = max(max_value, value_list[left] + value_list[middle] + value_list[right])
 print(max_value)
+"""
 """
 d = {i: value_list[i] for i in range(train_num)}
 
