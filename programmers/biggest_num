@@ -1,0 +1,69 @@
+
+def quick_sort(array):
+    if len(array) <= 1:
+        return array
+    pivot = array[0]
+    tail = array[1:]
+
+    left_side = []
+    right_side = []
+    for x in tail:
+        if x >= pivot:
+            left_side.append(x)
+        else:
+            right_side.append(x)
+        
+    
+    return quick_sort(left_side) + [pivot] + quick_sort(right_side)
+from itertools import permutations
+def solution(numbers):
+    answer = ''
+    """
+    l = []
+    for k in numbers:
+        str_k = str(k)
+        if len(str_k)==1:
+            l.append(k)
+        else:
+            for j in str_k:
+                l.append(int(j))
+    l.sort(reverse=True)
+    for i in l:
+        answer += str(i)
+            
+    return answer
+    
+    number = list(map(str, numbers))
+    number.sort(reverse=True)
+    for i in number:
+        answer += i
+    
+    numbers = list(map(str, numbers))
+    l = quick_sort(numbers)
+    for i in l:
+        answer += i
+    """
+    #시간 초과
+    """
+    perm = list(permutations(numbers, len(numbers)))    
+    l = []
+    for i in perm:
+        num = ''
+        for j in i:
+            num += str(j)
+        l.append(num)
+
+    l.sort(reverse=True)
+    answer = l[0]
+
+    return answer
+    """
+    # by https://velog.io/@insutance/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4Python-%EA%B0%80%EC%9E%A5-%ED%81%B0-%EC%88%98
+    def solution(numbers):
+    #0. key point
+        numbers_str = [str(num) for num in numbers]                 #1. 사전 값으로 정렬하기
+        numbers_str.sort(key=lambda num: num*3, reverse=True)       #2. number는 1000이하의 숫자이므로 x3(반복)한 값으로 비교
+
+        return str(int(''.join(numbers_str)))
+
+print(solution([6,2,10]))

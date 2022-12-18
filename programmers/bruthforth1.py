@@ -1,4 +1,5 @@
 def solution(answers):
+    answer = []
     s1 = [1,2,3,4,5]
     s2 = [2, 1, 2, 3, 2, 4, 2, 5]
     s3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
@@ -14,17 +15,20 @@ def solution(answers):
     s2_fin = s2*p2 + [s2[i] for i in range(q2)]
     s3_fin = s3*p3 + [s3[i] for i in range(q3)]
     
-    cnt = [0, 0, 0]
+    cnt = [0,0,0]
     for i in range(len(answers)):
         if answers[i] == s1_fin[i]:
             cnt[0] += 1
         if answers[i] == s2_fin[i]:
             cnt[1] += 1
         if answers[i] == s3_fin[i]:
-            cnt[2] += 1
-          
-    answer = []
+            cnt[2] += 1  
     
-    
-     
+    if max(cnt) == cnt[0]:
+        answer.append(1)
+    if max(cnt) == cnt[1]:
+        answer.append(2)
+    if max(cnt) == cnt[2]:
+        answer.append(3)
+
     return answer
