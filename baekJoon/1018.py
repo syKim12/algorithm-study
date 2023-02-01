@@ -37,11 +37,18 @@ for i in range(0, N-7): #세로
     for j in range(0, M-7):#가로
         cnt = 0
         check = make_board(arr[i][j])
+        print(check)
         for m in range(i, i+8): 
+            print(arr[m][j:j+8])
             for n in range(8): 
-                if arr[m][j+n] != check[m%8][n]:
-                    cnt += 1   
+                if m <= 7:
+                    if arr[m][j+n] != check[m][n]:
+                        cnt += 1   
+                else:
+                    if arr[m][j+n] != check[(m][n]:
+                        cnt += 1 
         min_cnt = min(cnt, min_cnt)
+        print("----------", min_cnt, cnt, m, j)
 print(min_cnt)    
         
 # 10 10 케이스
