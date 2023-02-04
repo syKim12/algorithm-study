@@ -3,12 +3,23 @@ from itertools import combinations
 N = int(input())
 min_difference = 1e9
 
-arr = [[0]*20 for _ in range(20)]
-for i in range(N):
-    temp = list(map(int, sys.stdin.readline().split()))
-    for j in range(N):
-        arr[i][j] = temp[j]
+arr = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 
+for temp_comb in combinations(range(N), N//2):
+    start, link = 0, 0
+    for i in range(N):
+        for j in range(N):
+            if i != j:
+                if i in temp_comb and j in temp_comb:
+                    start += arr[i][j]
+                elif i not in temp_comb and j not in temp_comb:
+                    link += arr[i][j]
+    min_difference = min(min_difference, abs(start-link))
+print(min_difference)
+
+
+
+"""
 numlist = [i for i in range(N)]
 numset = set(numlist)
 visited = [0]*N
@@ -44,35 +55,5 @@ def comparison(start, link):
     difference = abs(start_score - link_score)
     min_difference = min(difference, min_difference)
     return
-
-s = set()
-sol(s, visited, N/2)
-print(min_difference)
-
 """
-def readInt():
-    return int(stdin.readline())
 
-'''
-Begin solution
-'''
-
-from itertools import combinations
-n = readInt()
-grid = [list(map(int, read().split())) for _ in range(n)]
-
-diff = 100 * n
-for combo in combinations(range(n), n // 2):
-    s1 = 0  # in combo
-    s2 = 0
-    for i in range(n):
-        for j in range(n):
-            if i in combo and j in combo:
-                s1 += grid[i][j]
-            elif i not in combo and j not in combo:
-                s2 += grid[i][j]
-
-    diff = min(diff, abs(s1 - s2))
-
-print(diff)
-"""
