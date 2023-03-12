@@ -11,20 +11,20 @@ def bfs_fire():
     dx = [0, -1, 0, 1]
     dy = [-1, 0, 1, 0]
     length = len(fire)
-    cnt = 0
-    #while fire:
-    for x, y in fire:
-        #x, y = fire.popleft()
-        if cnt == length:
-            break
+    for k in range(length):
+        x, y = fire[k][0], fire[k][1]
         fire_visited[x][y] = 1 
         for i in range(4):
             fx = x + dx[i]
             fy = y + dy[i]
-            if 0 <= fx < r and 0 <= fy < c and not fire_visited[fx][fy] and arr[fx][fy] == '.':
-                arr[fx][fy] = 'F'
-                fire.append((fx, fy))
-        cnt += 1
+            if 0 <= fx < r and 0 <= fy < c and not fire_visited[fx][fy]:
+                if arr[fx][fy] == '.':
+                    arr[fx][fy] = 'F'
+                    fire.append((fx, fy))
+                elif arr[fx][fy] == 'J':
+                    arr[fx][fy] = 'F'
+                    return
+    
     #print('----fire-----')
     #debug(arr)
     
