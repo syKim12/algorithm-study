@@ -10,23 +10,22 @@ def bfs_fire():
     global fire
     dx = [0, -1, 0, 1]
     dy = [-1, 0, 1, 0]
-    length = len(fire)
-    for k in range(length):
-        x, y = fire[k][0], fire[k][1]
-        fire_visited[x][y] = 1 
+    F = deque(fire)
+    while F:
+        #print(F)
+        x_f, y_f = F.popleft()
+        fire_visited[x_f][y_f] = 1 
         for i in range(4):
-            fx = x + dx[i]
-            fy = y + dy[i]
+            fx = x_f + dx[i]
+            fy = y_f + dy[i]
+            #print(fx, fy)
+            #debug(fire_visited)
             if 0 <= fx < r and 0 <= fy < c and not fire_visited[fx][fy]:
-                if arr[fx][fy] == '.':
+                if arr[fx][fy] == '.' or arr[fx][fy] == '$':
                     arr[fx][fy] = 'F'
                     fire.append((fx, fy))
-                elif arr[fx][fy] == 'J':
-                    arr[fx][fy] = 'F'
-                    return
-    
-    #print('----fire-----')
-    #debug(arr)
+    F = deque(fire)  
+           
     
 
 def bfs(i, j):
@@ -35,22 +34,27 @@ def bfs(i, j):
     dx = [0, -1, 0, 1]
     dy = [-1, 0, 1, 0]
     time = 0
-    while q:
-        x, y = q.popleft()
-        visited[x][y] = 1
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if nx < 0 or nx >= r or ny < 0 or ny >= c:
-                return time+1
-            elif not visited[nx][ny] and arr[nx][ny] == '.':
-                arr[x][y] = '.'
-                arr[nx][ny] = 'J'
-                q.append((nx, ny))
-        bfs_fire()
+    while True:
         time += 1
-        #debug(arr)
-    return 'IMPOSSIBLE'
+        bfs_fire()
+        while q:
+            temp_j = []
+            x, y = q.popleft()
+            if x == 0 or x == r - 1 or y == 0 or y == c - 1:
+                #debug(arr)
+                return time
+            visited[x][y] = 1
+            for i in range(4):
+                nx = x + dx[i]
+                ny = y + dy[i]
+                if 0 <= nx < r and 0 <= ny < c and not visited[nx][ny] and arr[nx][ny] == '.':
+                    arr[x][y] = '$'
+                    arr[nx][ny] = 'J'
+                    temp_j.append((nx, ny))
+        #debug(arr)    
+        q = deque(temp_j)    
+        if not q:    
+            return 'IMPOSSIBLE'
 
 r, c = map(int, input().split())
 arr = [[0]*c for _ in range(r)]
